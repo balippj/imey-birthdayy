@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday 🎂💐</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #f6efe6;
+    --cream2: #e8e2d8;
+    --pink-light: #fbeaf4;
+    --pink-mid: #f5b3d6;
+    --pink-bold: #e07bb9;
+    --dark-red: #7a1a1a;
+    --dark-red2: #5c1212;
+    --mid-red: #9b2020;
+    --text-dark: #3a1a1a;
+    --bg-dark: #3d0a0a;
+  }
+
+  html, body {
+    width: 100%; height: 100%;
+    font-family: 'Courier Prime', monospace;
+    overflow: hidden;
+  }
+
+  /* LINEN TEXTURE BACKGROUND */
+  .linen-bg {
+    background-color: var(--cream);
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(139,90,43,0.04) 2px, rgba(139,90,43,0.04) 4px),
+      repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(139,90,43,0.03) 2px, rgba(139,90,43,0.03) 4px);
+  }
+
+  /* DARK GRADIENT BG */
+  .dark-bg {
+    background: radial-gradient(ellipse at 30% 30%, #5c0f0f 0%, #3d0a0a 40%, #1a0303 100%);
+  }
+
+  /* PAGES */
+  .page {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s ease;
+    overflow: auto;
+    z-index: 2;
+  }
+  .page.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  /* HERO PAGE */
+  #page-hero {
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem;
+  }
+  
+  /* BUKET BUNGA SVG CONTAINER (NO BORDER, TRANSPARENT PNG STYLE) */
+  .bouquet-vector-frame {
+    width: min(300px, 80%);
+    height: auto;
+    aspect-ratio: 1;
+    margin-bottom: 1rem;
+    animation: bouquetFloat 4s ease-in-out infinite;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  @keyframes bouquetFloat {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-12px) scale(1.03); }
+  }
+
+  .hero-title-happy {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 8vw, 7.5rem);
+    font-weight: 700;
+    color: var(--dark-red2);
+    line-height: 0.9;
+    letter-spacing: -2px;
+  }
+  .hero-title-birthday {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(4rem, 9vw, 9rem);
+    color: var(--pink-bold);
+    line-height: 0.9;
+    margin-top: -0.5rem;
+    text-shadow: 0 0 10px rgba(224, 123, 185, 0.2);
+  }
+  .hero-sub {
+    font-family: 'Courier Prime', monospace;
+    font-size: 1rem;
+    color: var(--text-dark);
+    margin-top: 1.2rem;
+    letter-spacing: 0.05em;
+  }
+  .btn-row {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* BUTTONS */
+  .btn-dark {
+    background: var(--dark-red);
+    color: var(--cream);
+    border: none;
+    border-radius: 50px;
+    padding: 0.7rem 2rem;
+    font-family: 'Courier Prime', monospace;
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: underline;
+    letter-spacing: 0.05em;
+    transition: background 0.2s, transform 0.1s;
+    position: relative;
+    box-shadow: 0 4px 12px rgba(122,26,26,0.2);
+  }
+  .btn-dark::after {
+    content: '';
+    position: absolute;
+    right: 14px; top: 50%; transform: translateY(-50%);
+    width: 8px; height: 8px;
+    background: var(--cream);
+    border-radius: 50%;
+    opacity: 0.6;
+  }
+  .btn-dark:hover { background: var(--mid-red); transform: scale(1.03); }
+  .btn-dark:active { transform: scale(0.98); }
+
+  /* NAO PAGE */
+  #page-nao { flex-direction: column; gap: 2rem; }
+  .nao-text {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(2rem, 6vw, 4rem);
+    color: var(--cream);
+    text-shadow: 0 0 20px rgba(255,100,100,0.3);
+    text-align: center;
+  }
+
+  /* MENU PAGE */
+  #page-menu {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    padding: 2rem;
+  }
+  .menu-title {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    color: var(--dark-red);
+    text-align: center;
+  }
+  .menu-grid {
+    display: flex;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .menu-card {
+    width: 150px; height: 150px;
+    background: rgba(232, 226, 216, 0.8);
+    border: 2px solid var(--pink-bold);
+    border-radius: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+    gap: 0.5rem;
+    backdrop-filter: blur(4px);
+  }
+  .menu-card:hover {
+    transform: translateY(-5px) scale(1.04);
+    background: var(--cream);
+    box-shadow: 0 8px 25px rgba(224,123,185,0.3);
+  }
+  .menu-card svg { width: 64px; height: 64px; stroke: var(--pink-bold); fill: none; stroke-width: 1.3; }
+  .menu-label {
+    font-size: 0.75rem;
+    color: var(--dark-red2);
+    letter-spacing: 0.05em;
+    text-align: center;
+    font-weight: 700;
+  }
+
+  /* ABOUT PAGE */
+  #page-about { flex-direction: column; padding: 2rem; gap: 1.5rem; }
+  .about-title {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    color: var(--dark-red);
+    text-align: center;
+  }
+  .about-layout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    flex-wrap: wrap;
+  }
+  .about-left, .about-right {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    flex: 1;
+    min-width: 200px;
+  }
+  .trait-pill {
+    background: var(--pink-bold);
+    color: white;
+    border-radius: 50px;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.8rem;
+    font-family: 'Courier Prime', monospace;
+    text-align: center;
+    line-height: 1.4;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+  }
+  .flower-frame {
+    width: 220px; height: 260px;
+    border: 2.5px solid var(--pink-bold);
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: white;
+  }
+  .flower-svg { width: 200px; height: 240px; }
+
+  /* MEMORIES PAGE */
+  #page-memories {
+    flex-direction: column;
+    padding: 2rem;
+    gap: 1rem;
+    align-items: center;
+  }
+  .memories-title {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    text-align: center;
+  }
+  .polaroid-scatter {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.2rem;
+    max-width: 800px;
+    padding: 1rem;
+  }
+  .polaroid {
+    background: white;
+    padding: 0.6rem 0.6rem 2rem;
+    box-shadow: 4px 6px 18px rgba(0,0,0,0.2);
+    width: 130px;
+    transform: rotate(var(--r, 0deg));
+    transition: transform 0.2s;
+  }
+  .polaroid:hover { transform: rotate(0deg) scale(1.08); z-index: 10; }
+  .polaroid-inner {
+    width: 100%;
+    aspect-ratio: 1;
+    background: var(--cream2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .polaroid-caption {
+    font-size: 0.65rem;
+    text-align: center;
+    margin-top: 0.5rem;
+    color: #555;
+    font-family: 'Courier Prime', monospace;
+  }
+
+  /* MESSAGE PAGE */
+  #page-message { flex-direction: column; padding: 2rem 3rem; gap: 1rem; align-items: center; overflow: auto; }
+  .msg-title {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    color: var(--dark-red);
+    text-align: center;
+  }
+  .msg-body {
+    max-width: 700px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    line-height: 1.9;
+    text-align: justify;
+    background: rgba(255, 255, 255, 0.6);
+    padding: 1.5rem;
+    border-radius: 16px;
+    backdrop-filter: blur(4px);
+  }
+
+  /* BACK BTN */
+  .back-btn-wrap {
+    margin-top: 1.5rem;
+  }
+
+  /* CANVAS EFEK BUNGA BERTERBANGAN */
+  #confetti-canvas {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.85;
+  }
+
+  @media (max-width: 600px) {
+    #page-hero { padding: 1.5rem; }
+    .btn-row { justify-content: center; }
+    .menu-card { width: 130px; height: 130px; }
+    .about-layout { flex-direction: column; }
+    .polaroid { width: 110px; }
+    #page-message { padding: 1.5rem; }
+  }
+</style>
+</head>
+<body class="linen-bg">
+
+<canvas id="confetti-canvas"></canvas>
+
+<div id="page-hero" class="page active">
+  <div class="bouquet-vector-frame">
+    <svg viewBox="0 0 200 200" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      <path d="M85 140 L70 185 M100 140 L100 190 M115 140 L130 185" stroke="#4a6b2f" stroke-width="4" stroke-linecap="round"/>
+      <path d="M82 145 Q100 135 118 145 Q100 155 82 145" fill="#f5b3d6" stroke="#e07bb9" stroke-width="1.5"/>
+      <path d="M82 145 Q65 160 80 160 Q90 150 85 145" fill="none" stroke="#e07bb9" stroke-width="1.5"/>
+      <path d="M118 145 Q135 160 120 160 Q110 150 115 145" fill="none" stroke="#e07bb9" stroke-width="1.5"/>
+      
+      <path d="M50 100 Q30 80 60 70 Q80 85 50 100Z" fill="#5c8a36" opacity="0.8"/>
+      <path d="M150 100 Q170 80 140 70 Q120 85 150 100Z" fill="#5c8a36" opacity="0.8"/>
+      <path d="M100 60 Q80 30 100 20 Q120 30 100 60Z" fill="#4a732b" opacity="0.8"/>
+      
+      <g transform="translate(65, 95) scale(0.85)">
+        <circle cx="0" cy="0" r="18" fill="#fffaf0" stroke="#e8e2d8" stroke-width="1"/>
+        <path d="M-10 -5 Q0 -15 10 -5 Q15 10 0 15 Q-15 10 -10 -5Z" fill="#fdf8f5"/>
+        <path d="M-5 -2 Q0 -8 5 -2 Q7 5 0 8 Q-7 5 -5 -2Z" fill="#fbeaf4"/>
+      </g>
+      
+      <g transform="translate(135, 95) scale(0.85)">
+        <circle cx="0" cy="0" r="18" fill="#fffaf0" stroke="#e8e2d8" stroke-width="1"/>
+        <path d="M-10 -5 Q0 -15 10 -5 Q15 10 0 15 Q-15 10 -10 -5Z" fill="#fdf8f5"/>
+        <path d="M-5 -2 Q0 -8 5 -2 Q7 5 0 8 Q-7 5 -5 -2Z" fill="#fbeaf4"/>
+      </g>
+
+      <g transform="translate(100, 65) scale(0.75)">
+        <path d="M0 0 Q-20 -30 0 -50 Q20 -30 0 0Z" fill="#ffffff" opacity="0.9"/>
+        <path d="M0 0 Q-35 -15 -50 -20 Q-30 10 0 0Z" fill="#ffffff" opacity="0.9"/>
+        <path d="M0 0 Q35 -15 50 -20 Q30 10 0 0Z" fill="#ffffff" opacity="0.9"/>
+        <circle cx="0" cy="-15" r="3" fill="#e8e2d8"/>
+      </g>
+
+      <g transform="translate(100, 70)">
+        <g id="petals-daisy">
+          <ellipse cx="0" cy="-22" rx="5" ry="12" fill="#f5b3d6" stroke="#e07bb9" stroke-width="0.5"/>
+          <ellipse cx="0" cy="-22" rx="5" ry="12" fill="#f5b3d6" stroke="#e07bb9" stroke-width="0.5" transform="rotate(30)"/>
+          <ellipse cx="0" cy="-22" rx="5" ry="12" fill="#f5b3d6" stroke="#e07bb9" stroke-width="0.5" transform="rotate(60)"/>
+          <ellipse cx="0" cy="-22" rx="5" ry="12" fill="#f5b3d6" stroke="#e07bb9" stroke-width="0.5" transform="rotate(90)"/>
+          <ellipse cx="0" cy="-22" rx="5" ry="12" fill="#f5b3d6" stroke="#e07bb9" stroke-width="0.5" transform="rotate(120)"/>
+          <ellipse cx="0" cy="-22" rx="5" ry="12" fill="#f5b3d6" stroke="#e07bb9" stroke-width="0.5" transform="rotate(150)"/>
+          <ellipse cx="0" cy="-22" rx="5" ry="12" fill="#f5b3d6" stroke="#e07bb9" stroke-width="0.5" transform="rotate(180)"/>
+          <ellipse cx="0" cy="-22" rx="5" ry="12" fill="#f5b3d6" stroke="#e07bb9" stroke-width="0.5" transform="rotate(210)"/>
+          <ellipse cx="0" cy="-22" rx="5" ry="12" fill="#f5b3d6" stroke="#e07bb9" stroke-width="0.5" transform="rotate(240)"/>
+          <ellipse cx="0" cy="-22" rx="5" ry="12" fill="#f5b3d6" stroke="#e07bb9" stroke-width="0.5" transform="rotate(270)"/>
+          <ellipse cx="0" cy="-22" rx="5" ry="12" fill="#f5b3d6" stroke="#e07bb9" stroke-width="0.5" transform="rotate(300)"/>
+          <ellipse cx="0" cy="-22" rx="5" ry="12" fill="#f5b3d6" stroke="#e07bb9" stroke-width="0.5" transform="rotate(330)"/>
+        </g>
+        <circle cx="0" cy="0" r="10" fill="#e07bb9"/>
+        <circle cx="0" cy="0" r="6" fill="#7a1a1a"/>
+      </g>
+
+      <g transform="translate(100, 115) scale(1.1)">
+        <use href="#petals-daisy"/>
+        <circle cx="0" cy="0" r="10" fill="#e07bb9"/>
+        <circle cx="0" cy="0" r="6" fill="#7a1a1a"/>
+      </g>
+
+      <g transform="translate(55, 90) scale(0.75)">
+        <use href="#petals-daisy"/>
+        <circle cx="0" cy="0" r="10" fill="#e07bb9"/>
+        <circle cx="0" cy="0" r="6" fill="#7a1a1a"/>
+      </g>
+
+      <g transform="translate(145, 105) scale(0.8)">
+        <use href="#petals-daisy"/>
+        <circle cx="0" cy="0" r="10" fill="#e07bb9"/>
+        <circle cx="0" cy="0" r="6" fill="#7a1a1a"/>
+      </g>
+
+      <g fill="#ffffff" opacity="0.9">
+        <circle cx="80" cy="130" r="2.5"/><circle cx="85" cy="133" r="2"/><circle cx="75" cy="125" r="2"/>
+        <circle cx="120" cy="130" r="2.5"/><circle cx="115" cy="135" r="2"/><circle cx="125" cy="125" r="2"/>
+        <circle cx="100" cy="138" r="3"/><circle cx="95" cy="140" r="2"/><circle cx="105" cy="141" r="2"/>
+        <circle cx="50" cy="115" r="2.5"/><circle cx="150" cy="120" r="2.5"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="hero-title-happy">Happy</div>
+  <div class="hero-title-birthday">Birthday</div>
+  <p class="hero-sub">do you want too see your gift</p>
+  <div class="btn-row">
+    <button class="btn-dark" onclick="showPage('page-menu')">yes!!!</button>
+    <button class="btn-dark" onclick="showPage('page-nao')">nooo :[[</button>
+  </div>
+</div>
+
+<div id="page-nao" class="page dark-bg">
+  <div style="text-align:center; display:flex; flex-direction:column; align-items:center; gap:2rem;">
+    <p class="nao-text">I promise you'll like it :(</p>
+    <button class="btn-dark" onclick="showPage('page-hero')">try again</button>
+  </div>
+</div>
+
+<div id="page-menu" class="page">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:2rem;padding:2rem;">
+    <div class="menu-title">Happy birthday sayangku</div>
+    <div class="menu-grid">
+      <div class="menu-card" onclick="showPage('page-memories')">
+        <svg viewBox="0 0 64 64"><rect x="8" y="10" width="22" height="26" rx="2"/><rect x="16" y="18" width="22" height="26" rx="2"/><rect x="22" y="8" width="22" height="26" rx="2"/><path d="M26 16 L32 22 L38 16"/><circle cx="33" cy="14" r="2"/></svg>
+        <span class="menu-label">Our foto love u.</span>
+      </div>
+      <div class="menu-card" onclick="showPage('page-about')">
+        <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="6"/><ellipse cx="32" cy="14" rx="6" ry="10"/><ellipse cx="32" cy="50" rx="6" ry="10"/><ellipse cx="14" cy="32" rx="10" ry="6"/><ellipse cx="50" cy="32" rx="10" ry="6"/><ellipse cx="18" cy="18" rx="7" ry="9" transform="rotate(45 18 18)"/><ellipse cx="46" cy="18" rx="7" ry="9" transform="rotate(-45 46 18)"/><ellipse cx="18" cy="46" rx="7" ry="9" transform="rotate(-45 18 46)"/><ellipse cx="46" cy="46" rx="7" ry="9" transform="rotate(45 46 46)"/></svg>
+        <span class="menu-label">About youuu</span>
+      </div>
+      <div class="menu-card" onclick="showPage('page-message')">
+        <svg viewBox="0 0 64 64"><rect x="8" y="16" width="48" height="36" rx="3"/><path d="M8 20 L32 36 L56 20"/><rect x="16" y="8" width="12" height="16" rx="2"/><path d="M18 14 L22 18 L28 10"/></svg>
+        <span class="menu-label">My message</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="page-about" class="page">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:1.5rem;padding:2rem;width:100%;">
+    <div class="about-title">about youuu</div>
+    <div class="about-layout">
+      <div class="about-left">
+        <div class="trait-pill">you are kind to everyone ♥</div>
+        <div class="trait-pill">you overthink sometimes, but it's because you care</div>
+        <div class="trait-pill">you don't give up easily</div>
+        <div class="trait-pill">you are stronger than you know</div>
+      </div>
+      <div class="flower-frame">
+        <svg class="flower-svg" viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg" stroke="#e07bb9" fill="none" stroke-width="1.5">
+          <path d="M100 200 Q80 160 60 120 Q50 90 70 70 Q85 55 100 80 Q115 55 130 70 Q150 90 140 120 Q120 160 100 200Z" fill="rgba(245, 179, 214, 0.7)" stroke="#e07bb9"/>
+          <path d="M100 180 Q70 150 50 110 Q30 80 50 55 Q65 35 90 60 Q95 40 100 55 Q105 40 110 60 Q135 35 150 55 Q170 80 150 110 Q130 150 100 180Z" fill="rgba(224, 123, 185, 0.5)"/>
+          <path d="M100 200 Q95 170 100 140 Q105 170 100 200" stroke="#7a1a1a" stroke-width="1"/>
+          <path d="M80 160 Q60 130 50 100" stroke="#7a1a1a" stroke-width="0.8" opacity="0.6"/>
+          <path d="M120 160 Q140 130 150 100" stroke="#7a1a1a" stroke-width="0.8" opacity="0.6"/>
+          <circle cx="100" cy="110" r="4" fill="#3a0808" stroke="none"/>
+          <line x1="100" y1="106" x2="100" y2="90" stroke="#7a1a1a" stroke-width="1.2"/>
+          <circle cx="100" cy="88" r="3" fill="#7a1a1a" stroke="none"/>
+          <path d="M60 160 Q40 130 30 100 Q20 70 40 50 Q55 35 70 55 Q75 35 80 50" fill="rgba(245, 179, 214, 0.6)" stroke="#e07bb9"/>
+          <path d="M60 160 Q55 130 60 100 Q65 130 60 160" stroke="#e07bb9" stroke-width="0.8"/>
+          <path d="M100 200 Q95 215 90 225 Q85 232 80 238" stroke="#3a5c1a" stroke-width="2.5" fill="none"/>
+          <path d="M100 200 Q105 215 110 225 Q115 232 120 238" stroke="#3a5c1a" stroke-width="2.5" fill="none"/>
+          <path d="M90 220 Q70 215 55 220 Q65 210 90 215Z" fill="rgba(50,80,20,0.7)" stroke="#3a5c1a"/>
+          <path d="M110 218 Q130 210 148 218 Q135 208 110 213Z" fill="rgba(50,80,20,0.7)" stroke="#3a5c1a"/>
+        </svg>
+      </div>
+      <div class="about-right">
+        <div class="trait-pill">you have your own unique way of making people happy</div>
+        <div class="trait-pill">your smile can change someone's mood instantly</div>
+        <div class="trait-pill">you care more than people realize</div>
+        <div class="trait-pill">you are truly one of a kind ✨</div>
+      </div>
+    </div>
+    <div class="back-btn-wrap">
+      <button class="btn-dark" onclick="showPage('page-menu')">back</button>
+    </div>
+  </div>
+</div>
+
+<div id="page-memories" class="page"> 
+  <div style="display:flex;flex-direction:column;align-items:center;gap:1.5rem;padding:2rem;width:100%;">
+    <div class="memories-title" style="color: var(--dark-red); font-weight: 700;">Our foto love u babyyyy</div>
+    <div class="polaroid-scatter">
+      <div class="polaroid" style="--r:-4deg">
+        <div class="polaroid-inner">
+          <img src="WhatsApp Image 2026-05-28 at 20.41.53.jpeg" alt="" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <p class="polaroid-caption"></p>
+      </div>
+      <div class="polaroid" style="--r:3deg">
+        <div class="polaroid-inner">
+          <img src="WhatsApp Image 2026-05-28 at 20.41.52 (2).jpeg" alt="" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <p class="polaroid-caption"></p>
+      </div>
+      <div class="polaroid" style="--r:-2deg">
+        <div class="polaroid-inner">
+          <img src="WhatsApp Image 2026-05-28 at 20.41.52.jpeg" alt="" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <p class="polaroid-caption"></p>
+      </div>
+      <div class="polaroid" style="--r:5deg">
+        <div class="polaroid-inner">
+          <img src="WhatsApp Image 2026-05-28 at 20.41.53 (1).jpeg" alt="" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <p class="polaroid-caption"></p>
+      </div>
+      <div class="polaroid" style="--r:-5deg">
+        <div class="polaroid-inner">
+          <img src="WhatsApp Image 2026-05-28 at 20.41.53 (2).jpeg" alt="" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <p class="polaroid-caption"></p>
+      </div>
+    </div>
+    <div class="back-btn-wrap">
+      <button class="btn-dark" onclick="showPage('page-menu')">back</button>
+    </div>
+  </div>
+</div>
+
+<div id="page-message" class="page">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:1.5rem;padding:2.5rem 3rem;width:100%;max-height:100vh;overflow-y:auto;">
+    <div class="msg-title">My message to youuu</div>
+    <div class="msg-body">
+      <p>happy birthday my loovee-!!</p><br>
+      <p>it's your special dayy, wish you all the best yaa sayangkuu 🌹 maafff yaaa kalau sampai sekarang i belumm bisaa kasih hal yang wow buat kamuuu, maafff juga kalau i masii banyak kurangnyaa dan belumm jadi yang terbaik. but trust me, i always try my best for u.</p><br>
+      <p>semoga tahun ini kamu bisa menjadi lebih beik lagi, lebih lebih lagi dari tahun sebelumnya dan di kabulkan segala doa doa dan mimpinya aminn. semangat selalu ya cantikku kuliah nya jangan ngeluh ngeluh i tau kamu pasti bisa jalani apa yang ada di sana walaupun i gabisa bantu karena i jauh dari kamu, semoga kamu bisa terima dengan keadaan seperti ini ya sayanggg hehe. i disini selalu doakan kamu, kesehatan kamu, kebaikan kamu, dijauhkan dari orang orang yang jahat. terimakasih karena sudah lahir ke dunia ini mengantarkan kebahagiaan yang tak terhingga kepada i yaa, maaf i baru bisa kasih kamu ini. pesan i kamu cemangat selalu, happy selalu dan jangan boong boong sama i yaa awas kamu ^_^. semoga umurnya berkah dan barokah selalu cintakuu, selamat menikmati tahun terakhir sebelum berkepala dua semoga kita selamanya. i sayang kamu. 💕</p>
+    </div>
+    <div class="back-btn-wrap">
+      <button class="btn-dark" onclick="showPage('page-menu')">back</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+// ==========================================
+// ANIMASI EFEK BUNGA BERTERBANGAN (PINK PETALS)
+// ==========================================
+const canvas = document.getElementById('confetti-canvas');
+const ctx = canvas.getContext('2d');
+
+let ww = window.innerWidth;
+let wh = window.innerHeight;
+
+canvas.width = ww;
+canvas.height = wh;
+
+const petalCount = 75; 
+const petals = [];
+const colors = ['#fbeaf4', '#f5b3d6', '#e07bb9', '#d4a0a0', '#e8e2d8']; 
+
+function randomRange(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
+class Petal {
+  constructor() {
+    this.x = Math.random() * ww;
+    this.y = Math.random() * wh - wh; 
+    this.w = randomRange(8, 14);
+    this.h = this.w * 0.85; 
+    this.color = colors[Math.floor(Math.random() * colors.length)];
+    this.speed = randomRange(1.2, 2.8); 
+    this.vx = randomRange(-0.6, 0.6); 
+    this.rot = Math.random() * 360; 
+    this.vr = randomRange(-1.5, 1.5); 
+  }
+
+  draw() {
+    ctx.save();
+    ctx.translate(this.x + this.w / 2, this.y + this.h / 2);
+    ctx.rotate(this.rot * Math.PI / 180);
+    ctx.fillStyle = this.color;
+    ctx.beginPath();
+    ctx.ellipse(0, 0, this.w / 2, this.h / 2, 0, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  update() {
+    this.y += this.speed;
+    this.x += this.vx;
+    this.rot += this.vr;
+
+    if (this.y > wh + this.h) {
+      this.x = Math.random() * ww;
+      this.y = -this.h;
+      this.speed = randomRange(1.2, 2.8);
+    }
+  }
+}
+
+function initPetals() {
+  for (let i = 0; i < petalCount; i++) {
+    petals.push(new Petal());
+  }
+}
+
+function animate() {
+  ctx.clearRect(0, 0, ww, wh);
+  petals.forEach(p => {
+    p.update();
+    p.draw();
+  });
+  requestAnimationFrame(animate);
+}
+
+window.addEventListener('resize', () => {
+  ww = window.innerWidth;
+  wh = window.innerHeight;
+  canvas.width = ww;
+  canvas.height = wh;
+});
+
+initPetals();
+animate();
+</script>
+</body>
+</html>
